@@ -1,52 +1,54 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'ma_cle_secrete'  # à modifier en prod
+app.secret_key = 'votre_cle_secrete'
 
-# Page de connexion
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        prenom = request.form['prenom']
-        nom = request.form['nom']
-        session['user'] = {'prenom': prenom, 'nom': nom}
+        session['nom'] = request.form['nom']
+        session['prenom'] = request.form['prenom']
         return redirect(url_for('home'))
     return render_template('login.html')
 
-# Page d'accueil
 @app.route('/home')
 def home():
-    user = session.get('user')
-    if not user:
+    nom = session.get('nom')
+    prenom = session.get('prenom')
+    if not nom or not prenom:
         return redirect(url_for('login'))
-    return render_template('home.html', user=user)
+    return render_template('home.html', nom=nom, prenom=prenom)
 
-# Page de calculatrice
 @app.route('/calculatrice', methods=['GET', 'POST'])
 def calculatrice():
+    if request.method == 'POST':
+        session['operation'] = request.form['operation']
+        return redirect(url_for('calcul'))
+    return render_template('choose_operation.html')
+
+@app.route('/calcul', methods=['GET', 'POST'])
+def calcul():
     result = None
+    op = session.get('operation')
     if request.method == 'POST':
         try:
-            a = float(request.form['a'])
-            b = float(request.form['b'])
-            op = request.form['operation']
+            num1 = float(request.form['num1'])
+            num2 = float(request.form['num2'])
             if op == '+':
-                result = a + b
+                result = num1 + num2
             elif op == '-':
-                result = a - b
+                result = num1 - num2
             elif op == '*':
-                result = a * b
+                result = num1 * num2
             elif op == '/':
-                result = a / b if b != 0 else "Erreur : division par zéro"
-        except Exception as e:
-            result = f"Erreur : {str(e)}"
-    return render_template('calculatrice.html', result=result)
+                result = num1 / num2 if num2 != 0 else "Erreur : division par zéro"
+        except ValueError:
+            result = "Entrée invalide"
+    return render_template('calculatrice.html', operation=op, result=result)
 
-# Déconnexion
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('login'))
+@app.route('/meteo')
+def meteo():
+    return "<h2>Fonctionnalité météo à venir</h2>"
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"><title>Choisir une opération</title></head>
+<body>
+    <h2>Choisissez une opération :</h2>
+    <form method="POST">
+        <select name="operation" required>
+            <option value="+">Addition (+)</option>
+            <option value="-">Soustraction (-)</option>
+            <option value="*">Multiplication (*)</option>
+            <option value="/">Division (/)</option>
+        </select>
+        <button type="submit">Suivant</button>
+    </form>
+</body>
+</html>

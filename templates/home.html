@@ -11,8 +11,8 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">MonSite</a>
         <div>
-            <span class="navbar-text me-3">Bienvenue {{ user.prenom }} {{ user.nom }}</span>
-            <a href="{{ url_for('logout') }}" class="btn btn-light btn-sm">Déconnexion</a>
+            <span class="navbar-text me-3">Bienvenue {{ prenom }} {{ nom }}</span>
+            <a href="{{ url_for('login') }}" class="btn btn-light btn-sm">Déconnexion</a>
         </div>
     </div>
 </nav>
@@ -30,13 +30,12 @@
                 </div>
             </div>
         </div>
-         <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-cloud-sun me-2 text-info"></i>Météo et événements</h5>
-                        <p class="card-text">Prévisions météo optimistes pour la semaine ! Consultez aussi les événements culturels et technologiques autour de vous.</p>
-                        <a href="#" class="btn btn-sm btn-outline-primary">Découvrir</a>
-                    </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-cloud-sun me-2 text-info"></i>Météo et événements</h5>
+                    <p class="card-text">Prévisions météo optimistes pour la semaine ! Consultez aussi les événements culturels et technologiques autour de vous.</p>
+                    <a href="{{ url_for('meteo') }}" class="btn btn-sm btn-outline-primary">Découvrir</a>
                 </div>
             </div>
         </div>
